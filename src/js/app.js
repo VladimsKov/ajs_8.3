@@ -3,10 +3,15 @@ import Settings from './basic';
 
 const options = new Settings();
 
-// console.log(options.defOptions);
-options.inputOptions.customSet = 'music';
-options.inputOptions.customValue = 'rock';
+options.inputOptions
+  .set('music', 'chillout')
+  .set('difficulty', 'nightmares');
+
 // console.log(options.addCustomOptions);
-options.inputOptions.customSet = 'difficulty';
-options.inputOptions.customValue = 'hard';
+
+options.inputOptions
+  .set('theme', 'gray')
+  .set('music', 'chillout')
+  .set('difficulty', 'hard');
+
 // console.log(options.addCustomOptions);

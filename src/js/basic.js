@@ -13,20 +13,21 @@ export default class Settings {
       .set('music', ['pop', 'rock', 'chillout', 'off'])
       .set('difficulty', ['normal', 'hard', 'nightmare']);
 
-    this.inputOptions = {
-      customSet: '',
-      customValue: '',
-    };
-
+    this.inputOptions = new Map();
     this.outputOptions = new Map(this.defOptions.entries());
   }
 
   get addCustomOptions() {
-    if (this.customOptions.get(this.inputOptions.customSet)
-      .includes(this.inputOptions.customValue)) {
-      return this.outputOptions
-        .set(this.inputOptions.customSet, this.inputOptions.customValue);
+    this.errors = [];
+    for (const customSet of this.inputOptions.keys()) {
+      if (this.customOptions.get(customSet)
+        .includes(this.inputOptions.get(customSet)) || this.defOptions
+        .get(customSet) === this.inputOptions.get(customSet)) {
+        this.outputOptions.set(customSet, this.inputOptions.get(customSet));
+      } else this.errors.push(customSet);
     }
-    return 'некорректное значение параметра';
+    this.inputOptions.clear();
+    if (!this.errors.length) return this.outputOptions;
+    return `Некорректные значения параметров: ${this.errors.join(', ')}`;
   }
 }
